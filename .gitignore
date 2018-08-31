@@ -102,3 +102,10 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# PyCharm
+.idea/
+
+# test auto-created directories
+tests/client_workspace/
+tests/server_ftp_dir/user2d/

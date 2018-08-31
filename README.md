@@ -1,2 +1,4 @@
 # quickftp
-python ftp wrapper
+python pyftplib and ftplib wrapper.
+
+Project on going...

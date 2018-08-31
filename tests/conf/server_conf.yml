@@ -1,0 +1,19 @@
+#
+# Configuration file for ftp server
+#
+ip: 127.0.0.1
+port: 12345
+ftp_root_dir: ./server_ftp_dir
+client_timeout: 30
+pem_certificate:
+
+clients:
+  - name: user1
+    password: 7c6a180b36896a0a8c02787eeafb0e4c
+    directory: user1d
+
+  - name: user2
+    password: 6cb75f652a9b52798eb6cf2201057c73
+    directory: user2d
+
+

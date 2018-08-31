@@ -1,0 +1,8 @@
+#
+# Configuration file for ftp client
+#
+ip: 127.0.0.1
+port: 12345
+username: user1
+password: password1
+workspace: ./client_workspace
