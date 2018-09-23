@@ -4,7 +4,7 @@
 ip: 127.0.0.1
 port: 12345
 ftp_root_dir: ./server_ftp_dir
-client_timeout: 30
+client_timeout: 5
 pem_certificate:
 
 clients:

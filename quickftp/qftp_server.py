@@ -94,7 +94,16 @@ class QuickFtpServer:
         run the server forever
         :return:
         """
-        server_inst = FTPServer((self.ip, self.port), self.handler)
+        self.server_inst = FTPServer((self.ip, self.port), self.handler)
         logging.info('Listen on %s:%d',
                          self.ip, self.port)
-        server_inst.serve_forever()
+        self.server_inst.serve_forever()
+
+    def terminate(self):
+        """
+        Terminate the server
+        :return:
+        """
+        self.server_inst.close_all()
+        logging.info('closed_all')
+        #self.server_inst.close()
