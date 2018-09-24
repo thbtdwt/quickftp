@@ -3,6 +3,10 @@ import unittest
 import os
 from threading import Thread
 import time
+
+import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)),'..'))
+
 from quickftp.qftp_helper import Helpers
 from quickftp.qftp_server import QuickFtpServer
 

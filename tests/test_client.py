@@ -2,9 +2,14 @@ import logging
 import time
 import os
 import unittest
+from multiprocessing import Process
+
+import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)),'..'))
 
 from quickftp.qftp_helper import Helpers
 from quickftp.qftp_client import QuickFtpClient
+from quickftp.qftp_server import QuickFtpServer
 
 
 class TestClient(unittest.TestCase):
@@ -13,8 +18,31 @@ class TestClient(unittest.TestCase):
     """
     client = None
 
+    @classmethod
+    def setUpClass(cls):
+        print('Launch server')
+        cls.launch_server()
+        time.sleep(2)
+        print('Server Launched')
+
+    @classmethod
+    def server_handler(cls):
+        current_dir_path = os.path.dirname(os.path.realpath(__file__))
+        s = QuickFtpServer(os.path.join(current_dir_path, 'conf/server_conf.yml'))
+        s.serve()
+
+    @classmethod
+    def launch_server(cls):
+        server = Process(target=cls.server_handler)
+        server.daemon = True
+        server.start()
+
     def test_connect(self):
         current_dir_path = os.path.dirname(os.path.realpath(__file__))
+
+        with self.assertRaises(Exception):
+            QuickFtpClient(os.path.join(current_dir_path, 'conf/wrong_client_conf.yml'))
+
         self.__class__.client = QuickFtpClient(os.path.join(current_dir_path, 'conf/client_conf.yml'))
         self.assertTrue(self.__class__.client.is_connected(), 'client not connected')
 
@@ -39,17 +67,20 @@ class TestClient(unittest.TestCase):
     def test_verification(self):
         self.__class__.client.get_file('data2', verify='md5')
         self.__class__.client.get_file('data2', verify='sha256')
-        exception_raised = False
-        try:
+
+        # wrong signature format
+        with self.assertRaises(Exception):
             self.__class__.client.get_file('data2', verify='zzz')
-        except Exception as e:
-            exception_raised = True
-            print(e)
-        self.assertTrue(exception_raised, 'No exception raised')
+
+        # no signature file
+        with self.assertRaises(Exception):
+            self.__class__.client.get_file('data3', verify='md5')
+
+        # wrong signature
+        with self.assertRaises(Exception):
+            self.__class__.client.get_file('data3', verify='sha256')
 
 
 if __name__ == '__main__':
     Helpers.configure_logger(logging.DEBUG)
     unittest.main()
-
-
