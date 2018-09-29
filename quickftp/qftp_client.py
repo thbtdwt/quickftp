@@ -119,5 +119,3 @@ class QuickFtpClient:
             else:
                 raise Exception('No %s found' % signature_fname)
         return file_path
-
-

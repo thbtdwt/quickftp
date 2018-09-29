@@ -27,6 +27,7 @@ class TestClient(unittest.TestCase):
 
     @classmethod
     def server_handler(cls):
+        Helpers.configure_logger(logging.ERROR)
         current_dir_path = os.path.dirname(os.path.realpath(__file__))
         s = QuickFtpServer(os.path.join(current_dir_path, 'conf/server_conf.yml'))
         s.serve()
@@ -62,7 +63,7 @@ class TestClient(unittest.TestCase):
         self.assertTrue(self.__class__.client.is_connected(), 'client not connected')
 
     def test_get_file(self):
-        self.assertIsNotNone(self.__class__.client.get_file('data1'),'unable to get data1')
+        self.assertIsNotNone(self.__class__.client.get_file('data1'), 'unable to get data1')
 
     def test_verification(self):
         self.__class__.client.get_file('data2', verify='md5')
