@@ -43,7 +43,7 @@ All parameters are mandatory.
 The client provides 3 main api:
 * is_connected() => True is the client is connected to the server.
 * is_present(<file path>) => True is the file is present on the server.
-* get_file(<file or directory path>) => Get the file or directory from the server.
+* get(<file or directory path>) => Get the file or directory from the server.
 
 For a given file when a signature (.md5 or .sha256) is present on the server, the signature file will be automatically 
 downloaded and analyzed. 

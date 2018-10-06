@@ -59,35 +59,35 @@ class TestClient(unittest.TestCase):
         print('')
 
         self.assertFalse(self.__class__.client.is_connected(), 'client still connected')
-        self.__class__.client.get_file('data1')
+        self.__class__.client.get('data1')
         self.assertTrue(self.__class__.client.is_connected(), 'client not connected')
 
     def test_get_file(self):
-        self.assertIsNotNone(self.__class__.client.get_file('data1'), 'unable to get data1')
-        self.assertIsNotNone(self.__class__.client.get_file('/data1'), 'unable to get data1')
-        self.assertIsNotNone(self.__class__.client.get_file('./data1'), 'unable to get data1')
-        self.assertIsNotNone(self.__class__.client.get_file('/directory/../data1'), 'unable to get data1')
+        self.assertIsNotNone(self.__class__.client.get('data1'), 'unable to get data1')
+        self.assertIsNotNone(self.__class__.client.get('/data1'), 'unable to get data1')
+        self.assertIsNotNone(self.__class__.client.get('./data1'), 'unable to get data1')
+        self.assertIsNotNone(self.__class__.client.get('/directory/../data1'), 'unable to get data1')
 
     def test_verification(self):
-        self.__class__.client.get_file('data2', verify='md5')
-        self.__class__.client.get_file('data2', verify='sha256')
+        self.__class__.client.get('data2', verify='md5')
+        self.__class__.client.get('data2', verify='sha256')
 
         # wrong signature format
         with self.assertRaises(Exception):
-            self.__class__.client.get_file('data2', verify='zzz')
+            self.__class__.client.get('data2', verify='zzz')
 
         # no signature file
         with self.assertRaises(Exception):
-            self.__class__.client.get_file('data3', verify='md5')
+            self.__class__.client.get('data3', verify='md5')
 
         # wrong signature
         with self.assertRaises(Exception):
-            self.__class__.client.get_file('data3', verify='sha256')
+            self.__class__.client.get('data3', verify='sha256')
 
     def test_get_dir(self):
-        self.assertIsNotNone(self.__class__.client.get_file(''), 'unable to get root directory')
-        self.assertIsNotNone(self.__class__.client.get_file('directory'), 'unable to get directory')
-        self.assertIsNotNone(self.__class__.client.get_file('directory/subdirectory', verify='md5'),
+        self.assertIsNotNone(self.__class__.client.get(''), 'unable to get root directory')
+        self.assertIsNotNone(self.__class__.client.get('directory'), 'unable to get directory')
+        self.assertIsNotNone(self.__class__.client.get('directory/subdirectory', verify='md5'),
                              'unable to get directory/subdirectory')
 
 if __name__ == '__main__':

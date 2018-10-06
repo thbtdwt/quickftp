@@ -137,7 +137,7 @@ class QuickFtpClient:
         :param verify: 'md5' or 'sha256'
         :return: the local file path
         """
-        logging.debug('get "%s"' % fpath)
+        logging.debug('get file "%s"' % fpath)
 
         type = self.__get_type(fpath)
 
@@ -167,7 +167,7 @@ class QuickFtpClient:
         else:
             raise Exception('Unable to get type of %s' % fpath)
 
-    def get_file(self, fpath, to=None, verify=None):
+    def get(self, fpath, to=None, verify=None):
         """
         Gets a file from the server, and optionally verify the signature
         :param fpath: file path on the server
