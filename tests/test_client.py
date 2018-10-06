@@ -64,6 +64,9 @@ class TestClient(unittest.TestCase):
 
     def test_get_file(self):
         self.assertIsNotNone(self.__class__.client.get_file('data1'), 'unable to get data1')
+        self.assertIsNotNone(self.__class__.client.get_file('/data1'), 'unable to get data1')
+        self.assertIsNotNone(self.__class__.client.get_file('./data1'), 'unable to get data1')
+        self.assertIsNotNone(self.__class__.client.get_file('/directory/../data1'), 'unable to get data1')
 
     def test_verification(self):
         self.__class__.client.get_file('data2', verify='md5')
@@ -81,6 +84,11 @@ class TestClient(unittest.TestCase):
         with self.assertRaises(Exception):
             self.__class__.client.get_file('data3', verify='sha256')
 
+    def test_get_dir(self):
+        self.assertIsNotNone(self.__class__.client.get_file(''), 'unable to get root directory')
+        self.assertIsNotNone(self.__class__.client.get_file('directory'), 'unable to get directory')
+        self.assertIsNotNone(self.__class__.client.get_file('directory/subdirectory', verify='md5'),
+                             'unable to get directory/subdirectory')
 
 if __name__ == '__main__':
     Helpers.configure_logger(logging.DEBUG)
